@@ -1,7 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
+const cors = require('cors');
 const app = express();
-const port = 3000;
+const port = 3090;
+
+app.use(cors);
 
 var db_config = {
     host: '127.0.0.1',
@@ -29,15 +32,12 @@ handleDisconnect();
 
 app.get('/', (req, res) => {
     
-    let sql = 'SELECT * FROM users';
-    let query = connection.query(sql, (err, results) => {
-        if(err) throw err;
-        console.log(results);
-        res.send(results);
-    });
-
+    return res.send('Hello World!');
+    
     }
 );
+
+// Siempre dejar abajo, porque es cuando se ejecuta el servidor
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
