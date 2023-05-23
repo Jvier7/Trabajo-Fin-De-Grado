@@ -1,0 +1,17 @@
+.todo {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    padding: 2%;
+    border: 1px solid gray;
+}
+
+.todo img {
+    max-width: 30px;
+}
+
+.isCompleted {
+    color: green;
+}

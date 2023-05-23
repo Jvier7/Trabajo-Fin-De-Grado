@@ -1,17 +1,20 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3090;
 
-app.use(cors);
+app.use(cors());
+app.use(express.json());
+app.use(cookieParser());
 
 var db_config = {
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'root',
-    database: 'TFG'
-  }
+  host: '127.0.0.1',
+  user: 'root',
+  password: 'root',
+  database: 'TFG'
+}
 
 var connection
 function handleDisconnect() {
@@ -31,15 +34,100 @@ function handleDisconnect() {
 handleDisconnect();
 
 app.get('/', (req, res) => {
-    
-    return res.send('Hello World!');
-    
-    }
-);
+  return res.send('Hello World!');
+});
 
-// Siempre dejar abajo, porque es cuando se ejecuta el servidor
+app.post('/api/login', (req, res) => {
+  const { email, password } = req.body;
+  const query = 'Select * from users where email = "' + email + '" and password = "' + password + '"';
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+  });
+});
 
-app.listen(port, () => {
+app.get('/api/tasks/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'Select * from todo where user_id = ' + id;
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+  });
+});
+
+app.get('/api/deleteTask/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM todo WHERE id = ' + id;
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+  });
+});
+
+app.get('/api/makeImportant/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'UPDATE todo SET priority = 1 WHERE id = ' + id;
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+  });
+});
+
+app.get('/api/makeUnimportant/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'UPDATE todo SET priority = 0 WHERE id = ' + id;
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+  });
+});
+
+app.post('/api/register', (req, res) => {
+  const { name, email, password } = req.body;
+  // comprobar que no haya otro usuario con el mismo email
+  const query = 'Select * from users where email = "' + email + '"';
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    if (results.length > 0) {
+      res.send({ message: 'Ya existe un usuario con ese email' })
+    } else {
+      const query = 'INSERT INTO users (name, email, password) VALUES ("' + name + '", "' + email + '", "' + password + '")';
+      connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+        res.send(results)
+      });
+    }});
+  });
+
+  app.get('/api/setNotCompleted/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'UPDATE todo SET isCompleted = 0 WHERE id = ' + id;
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(results)
+    });
+  });
+
+  app.get('/api/isCompleted/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'UPDATE todo SET isCompleted = 1 WHERE id = ' + id;
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(results)
+    });
+  });
+
+  app.post('/api/addTasks', (req, res) => {
+    const { text, userId } = req.body;
+    const query = 'INSERT INTO todo (text, user_id, priority, isCompleted) VALUES ("' + text + '", ' + userId + ', 0, ' + false + ')';
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(results)
+    });
+  });
+
+  // Siempre dejar abajo, porque es cuando se ejecuta el servidor
+
+  app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
-    }
-);
+  });
