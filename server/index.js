@@ -12,7 +12,7 @@ app.use(cookieParser());
 var db_config = {
   host: '127.0.0.1',
   user: 'root',
-  password: 'root',
+  password: 'tY3rbpYG8&@W1l^t.a',
   database: 'TFG'
 }
 
