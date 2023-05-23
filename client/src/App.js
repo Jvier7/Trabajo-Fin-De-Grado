@@ -3,13 +3,25 @@ import { React, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from './components/login/login';
 import Home from './components/home/home';
+import { initializeApp } from "firebase/app";
 import Register from './components/register/register';
 
 function App() {
   // const [url, setUrl] = useState("http://localhost:3090")
-  const [url, setUrl] = useState("https://jointscounter:6090")
+  const [url, setUrl] = useState("https://jointscounter.com:6090")
   const [user, setUser] = useState(null)
   const [isLogged, setIsLogged] = useState(false)
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBjpQ5kUI_PJ5BggLzn0ScoXpqTBzQ4cYo",
+    authDomain: "taskweb-938e7.firebaseapp.com",
+    projectId: "taskweb-938e7",
+    storageBucket: "taskweb-938e7.appspot.com",
+    messagingSenderId: "896698526786",
+    appId: "1:896698526786:web:0d3787d162ae4ef57391db"
+  };
+
+  useEffect(() => { initializeApp(firebaseConfig) }, []);
 
   if (!isLogged) {
     return (
