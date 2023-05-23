@@ -6,7 +6,8 @@ import Home from './components/home/home';
 import Register from './components/register/register';
 
 function App() {
-  const [url, setUrl] = useState("http://localhost:3090")
+  // const [url, setUrl] = useState("http://localhost:3090")
+  const [url, setUrl] = useState("https://jointscounter:6090")
   const [user, setUser] = useState(null)
   const [isLogged, setIsLogged] = useState(false)
 

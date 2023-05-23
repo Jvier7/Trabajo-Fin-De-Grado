@@ -2,12 +2,18 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const https = require('https');
 const app = express();
 const port = 3090;
 
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+
+const options = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/privkey.pem')
+};
 
 var db_config = {
   host: '127.0.0.1',
@@ -128,6 +134,12 @@ app.post('/api/register', (req, res) => {
 
   // Siempre dejar abajo, porque es cuando se ejecuta el servidor
 
-  app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-  });
+  // app.listen(port, () => {
+  //   console.log(`Example app listening at http://localhost:${port}`)
+  // });
+
+const server = https.createServer(options, app);
+
+server.listen(port, () => {
+  console.log('Servidor HTTPS escuchando en el puerto ' + port);
+});
