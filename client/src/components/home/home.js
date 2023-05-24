@@ -16,6 +16,9 @@ function Home(props) {
 
     useEffect(() => {
         getTask()
+        setInterval(() => {
+            getTask()
+        }, 10000)
     }, [])
 
     function addTask() {
@@ -78,7 +81,6 @@ function Home(props) {
 
     return (
         <div className="container2">
-            <h1>Tareas Por Hacer De {props.user.name}</h1>
             <div className="todoTasks">
                 {
                     tasks.length === 0 ? <p>No hay tareas</p> :

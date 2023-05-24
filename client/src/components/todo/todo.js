@@ -46,15 +46,17 @@ function Todo(props) {
     return (
         <div className='todo'>
             {
-                props.task.isCompleted ? <img src = "/assets/circleCompleted.png" onClick={setNotCompleted}></img> : <img src = "/assets/circle.png" onClick={isCompleted}></img>
+                props.task.isCompleted ? <img className="circleCompleted" src = "/assets/circleCompleted.png" onClick={setNotCompleted}></img> : <img className="circleNotCompleted" src = "/assets/circle.png" onClick={isCompleted}></img>
             }
             <p>{
                 props.task.isCompleted ? <s className='isCompleted'>{props.task.text}</s> : props.task.text
             }</p>
-            {
-                props.task.priority ? <img src = "/assets/importantCompleted.png" onClick={makeUnimportant}></img> : <img src = "/assets/important.png" onClick={makeImportant}></img>
-            }
-            <img src = "/assets/delete.png" onClick={deleteTask}></img>
+            <div className="containerStarDelete">
+                {
+                    props.task.priority ? <img src = "/assets/importantCompleted.png" onClick={makeUnimportant}></img> : <img src = "/assets/important.png" onClick={makeImportant}></img>
+                }
+                <img src = "/assets/delete.png" onClick={deleteTask}></img>
+            </div>
         </div>
     )
 }

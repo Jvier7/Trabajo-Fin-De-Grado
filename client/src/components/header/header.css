@@ -1,0 +1,14 @@
+.adbIcon {
+
+}
+
+.god {
+    background: linear-gradient(90deg, rgba(128,66,147,1) 45%, rgba(171,52,100,1) 79%, rgba(217,37,51,0.936186974789916) 97%);
+}
+
+.god h1 {
+    font-size: 1.3rem;
+    margin: 0;
+    padding-right: 1rem;
+    color: black;
+}

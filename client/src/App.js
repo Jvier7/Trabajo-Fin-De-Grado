@@ -5,6 +5,8 @@ import Login from './components/login/login';
 import Home from './components/home/home';
 import { initializeApp } from "firebase/app";
 import Register from './components/register/register';
+import Header from './components/header/header';
+import Profile from './components/profile/profile';
 
 function App() {
   // const [url, setUrl] = useState("http://localhost:3090")
@@ -43,8 +45,10 @@ function App() {
     <>
       <BrowserRouter>
         <div className='main'>
+          <Header user = {user}></Header>
           <Routes>
             <Route path='home' element={<Home url={url} user={user}/>}></Route>
+            <Route path='profile' element={<Profile url={url} user={user}/>}></Route>
             <Route path='*' element={<Navigate to='/home' />}></Route>
           </Routes>
         </div>
