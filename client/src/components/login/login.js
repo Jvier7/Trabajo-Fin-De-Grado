@@ -8,7 +8,13 @@ function Login(props) {
     const navigate = useNavigate();
 
     function handleSubmit(e) {
+
         e.preventDefault();
+        if (email.length === 0 || password.length === 0) {
+            alert("Los campos no pueden estar vacíos")
+            return
+        }
+
         fetch (`${props.url}/api/login`, {
             method: 'POST',
             headers: {
@@ -48,11 +54,11 @@ function Login(props) {
                                                 <i className="fas fa-cubes fa-2x me-3" style={{ color: '#ff6219' }}></i>
                                                 <span className="h2 fw-bold mb-0">Login</span>
                                             </div>
+                                                <label className="form-label" htmlFor="form2Example17">Email</label>
                                             <div className="form-outline mb-4">
                                                 <input type="email" id="form2Example17" className="form-control form-control-lg" onChange={ (e) => {
                                                     setEmail(e.target.value)
                                                 } }/>
-                                                <label className="form-label" htmlFor="form2Example17">Email</label>
                                             </div>
                                             <div className="form-outline mb-4">
                                                 <input type="password" id="form2Example27" className="form-control form-control-lg" onChange={ (e) => {

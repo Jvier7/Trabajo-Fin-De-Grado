@@ -15,13 +15,17 @@ import AdbIcon from '@mui/icons-material/Adb';
 import "./header.css";
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = [];
 const settings = ['Profile', 'Logout'];
 
 function ResponsiveAppBar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
+
+  function logout() {
+    window.location.reload();
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -37,17 +41,30 @@ function ResponsiveAppBar(props) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  
-  function logout() {
-    window.location.reload();
-    }
 
   return (
     <AppBar position="static" className="god">
       <Container maxWidth="xl">
-        
         <Toolbar disableGutters>
-          <Avatar className="adbIcon" src="/assets/logo.png" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Avatar onClick={() => {
+            navigate('/home');
+          }} className="adbIcon" src="/assets/logo.png" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+          </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -60,7 +77,7 @@ function ResponsiveAppBar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Menu
+            {/* <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -83,10 +100,28 @@ function ResponsiveAppBar(props) {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> */}
           </Box>
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+
+          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {/* {pages.map((page) => (
+            {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -94,11 +129,11 @@ function ResponsiveAppBar(props) {
               >
                 {page}
               </Button>
-            ))} */}
+            ))}
           </Box>
           <h1>{props.user.name}</h1>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Ajustes">
+            <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
@@ -119,17 +154,21 @@ function ResponsiveAppBar(props) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={ () => {
-                    console.log("Perfil");
-                    navigate('/profile');
-                  }}>{"Perfil"}</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={ () => {
-                    logout();
-                  }}>{"Cerrar Sesión"}</Typography>
-                </MenuItem>
+
+              <MenuItem onClick={() =>{
+                handleCloseUserMenu();
+                console.log("Perfil")
+                  navigate('/profile')
+              }}>
+                <Typography textAlign="center">{"Perfil"}</Typography>
+              </MenuItem>
+              <MenuItem onClick={()=>{
+                handleCloseUserMenu();
+                console.log("Cerrar Sesión")
+                logout();
+              }}>
+                <Typography textAlign="center">{"Cerrar Sesión"}</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

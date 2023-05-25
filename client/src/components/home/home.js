@@ -106,11 +106,10 @@ function Home(props) {
                         addTask()
                     }
                 }} />
-                {/* <button onClick={addTask}>Añadir tarea</button> */}
                 <Button variant="contained" onClick={addTask}>+</Button>
             </div>
             {
-                error ? <Stack sx={{ width: '20%', position: 'fixed', top: 20 }} spacing={2}>
+                error ? <Stack sx={{ width: '20%', position: 'fixed', left: 500, top: 20 }} spacing={2}>
                     <Alert severity="error">{msg}</Alert>
                 </Stack> : null
             }

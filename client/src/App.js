@@ -9,8 +9,8 @@ import Header from './components/header/header';
 import Profile from './components/profile/profile';
 
 function App() {
-  // const [url, setUrl] = useState("http://localhost:3090")
-  const [url, setUrl] = useState("https://jointscounter.com:6090")
+  const [url, setUrl] = useState("http://localhost:3090")
+  // const [url, setUrl] = useState("https://jointscounter.com:6090")
   const [user, setUser] = useState(null)
   const [isLogged, setIsLogged] = useState(false)
 

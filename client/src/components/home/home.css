@@ -9,6 +9,12 @@
     margin-top: 1%;
 }
 
+.todoTasks p {
+    margin-top: 3%;
+    font-size: 2rem;
+    color: black;
+}
+
 .addTodos {
     position: fixed;
     bottom: 0;

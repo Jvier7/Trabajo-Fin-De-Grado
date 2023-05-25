@@ -11,15 +11,22 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-const options = {
-  cert: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/fullchain.pem'),
-  key: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/privkey.pem')
-};
+// const options = {
+//   cert: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/fullchain.pem'),
+//   key: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/privkey.pem')
+// };
+
+// var db_config = {
+//   host: '127.0.0.1',
+//   user: 'root',
+//   password: 'tY3rbpYG8&@W1l^t.a',
+//   database: 'TFG'
+// }
 
 var db_config = {
   host: '127.0.0.1',
   user: 'root',
-  password: 'tY3rbpYG8&@W1l^t.a',
+  password: 'root',
   database: 'TFG'
 }
 
@@ -103,44 +110,73 @@ app.post('/api/register', (req, res) => {
         if (error) throw error;
         res.send(results)
       });
-    }});
+    }
   });
-
-  app.get('/api/setNotCompleted/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'UPDATE todo SET isCompleted = 0 WHERE id = ' + id;
-    connection.query(query, function (error, results, fields) {
-      if (error) throw error;
-      res.send(results)
-    });
-  });
-
-  app.get('/api/isCompleted/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'UPDATE todo SET isCompleted = 1 WHERE id = ' + id;
-    connection.query(query, function (error, results, fields) {
-      if (error) throw error;
-      res.send(results)
-    });
-  });
-
-  app.post('/api/addTasks', (req, res) => {
-    const { text, userId } = req.body;
-    const query = 'INSERT INTO todo (text, user_id, priority, isCompleted) VALUES ("' + text + '", ' + userId + ', 0, ' + false + ')';
-    connection.query(query, function (error, results, fields) {
-      if (error) throw error;
-      res.send(results)
-    });
-  });
-
-  // Siempre dejar abajo, porque es cuando se ejecuta el servidor
-
-  // app.listen(port, () => {
-  //   console.log(`Example app listening at http://localhost:${port}`)
-  // });
-
-const server = https.createServer(options, app);
-
-server.listen(port, () => {
-  console.log('Servidor HTTPS escuchando en el puerto ' + port);
 });
+
+app.get('/api/setNotCompleted/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'UPDATE todo SET isCompleted = 0 WHERE id = ' + id;
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+  });
+});
+
+app.get('/api/isCompleted/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'UPDATE todo SET isCompleted = 1 WHERE id = ' + id;
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+  });
+});
+
+app.post('/api/addTasks', (req, res) => {
+  const { text, userId } = req.body;
+  const query = 'INSERT INTO todo (text, user_id, priority, isCompleted) VALUES ("' + text + '", ' + userId + ', 0, ' + false + ')';
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+  });
+});
+
+app.post('/api/profile/', (req, res) => {
+  const { user, array, actualPassword } = req.body;
+  console.log(array)
+  if (actualPassword != user.password) {
+    res.send({ message: 'La contraseña actual no coincide' })
+  }
+  const patata = 'UPDATE users SET '
+  const patata2 = ' WHERE id = ' + user.id;
+  let values = '';
+  array.forEach((element, index) => {
+    if (element.type == 'string') {
+      element.val = '"' + element.val + '"';
+    }
+    values += element.column + " = " + element.val;
+    console.log(values)
+
+    if (index != array.length - 1) {
+      values += ", ";
+    }
+  })
+  let query = patata + values + patata2;
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+  }
+  );
+  res.send(true)
+});
+
+// Siempre dejar abajo, porque es cuando se ejecuta el servidor
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+});
+
+// const server = https.createServer(options, app);
+
+// server.listen(port, () => {
+//   console.log('Servidor HTTPS escuchando en el puerto ' + port);
+// });

@@ -1,9 +1,13 @@
-.adbIcon {
-
-}
 
 .god {
+    /* display: flex; */
+    position: fixed !important;
+    top: 0;
     background: linear-gradient(90deg, rgba(128,66,147,1) 45%, rgba(171,52,100,1) 79%, rgba(217,37,51,0.936186974789916) 97%);
+}
+
+.adbIcon {
+    cursor: pointer;
 }
 
 .god h1 {
@@ -12,3 +16,9 @@
     padding-right: 1rem;
     color: black;
 }
+
+@media (max-width: 767px) {
+    /* .hideMobile {
+        display: none;
+    } */
+} 
