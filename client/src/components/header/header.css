@@ -1,12 +1,37 @@
 
 .god {
-    /* display: flex; */
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
     position: fixed !important;
     top: 0;
     background: linear-gradient(90deg, rgba(128,66,147,1) 45%, rgba(171,52,100,1) 79%, rgba(217,37,51,0.936186974789916) 97%);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    padding: 0 !important;
+    
+}
+
+.dateNow {
+    display: flex;
+}
+
+.counter p {
+    margin: 0 !important;
+}
+
+.settingsUser {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
 }
 
 .adbIcon {
+    width: 100px;
+    padding: 1rem;
     cursor: pointer;
 }
 

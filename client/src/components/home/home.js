@@ -7,7 +7,6 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
 function Home(props) {
-    const [tasks, setTasks] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [newTask, setNewTask] = useState("")
     const [error, setError] = useState(false)
@@ -70,9 +69,11 @@ function Home(props) {
                 data.sort((a, b) => {
                     if (a.priority && !b.priority) return -1
                     if (!a.priority && b.priority) return 1
+                    if (a.isCompleted && !b.isCompleted) return 1
+                    if (!a.isCompleted && b.isCompleted) return -1
                     return 0
                 })
-                setTasks(data)
+                props.setTasks(data)
                 setIsLoading(false)
             })
     }
@@ -83,8 +84,8 @@ function Home(props) {
         <div className="container2">
             <div className="todoTasks">
                 {
-                    tasks.length === 0 ? <p>No hay tareas</p> :
-                        tasks.map((task, index) => {
+                    props.tasks.length === 0 ? <p>No hay tareas</p> :
+                        props.tasks.map((task, index) => {
                             return (
                                 <Todo url={props.url} task={task} key={index} getTask={getTask}></Todo>
                             )
@@ -92,13 +93,6 @@ function Home(props) {
                 }
             </div>
             <div className="addTodos">
-                {/* <input type="text" onChange={(event) => {
-                    setNewTask(event.target.value)
-                }} value={newTask} onKeyDown={(e) => {
-                    if(e.key === 'Enter') {
-                        addTask()
-                    }
-                }}></input> */}
                 <TextField className="textfield-home" id="filled-basic" label="Nueva Tarea" variant="filled" onChange={(event) => {
                     setNewTask(event.target.value)
                 }} value={newTask} onKeyDown={(e) => {
@@ -113,7 +107,7 @@ function Home(props) {
                     <Alert severity="error">{msg}</Alert>
                 </Stack> : null
             }
-        
+
             {
                 success ? <Stack sx={{ width: '20%', position: 'fixed', left: 500, top: 20 }} spacing={2}>
                     <Alert severity="success">Tarea añadida correctamente</Alert>

@@ -5,30 +5,31 @@ const cookieParser = require('cookie-parser');
 const https = require('https');
 const fs = require('fs');
 const app = express();
-const port = 3090;
+const bcrypt = require('bcrypt');
+const port = 6090;
 
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-// const options = {
-//   cert: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/fullchain.pem'),
-//   key: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/privkey.pem')
-// };
-
-// var db_config = {
-//   host: '127.0.0.1',
-//   user: 'root',
-//   password: 'tY3rbpYG8&@W1l^t.a',
-//   database: 'TFG'
-// }
+const options = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/jointscounter.com/privkey.pem')
+};
 
 var db_config = {
   host: '127.0.0.1',
   user: 'root',
-  password: 'root',
+  password: 'tY3rbpYG8&@W1l^t.a',
   database: 'TFG'
 }
+
+// var db_config = {
+//   host: '127.0.0.1',
+//   user: 'root',
+//   password: 'root',
+//   database: 'TFG'
+// }
 
 var connection
 function handleDisconnect() {
@@ -54,6 +55,15 @@ app.get('/', (req, res) => {
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
   const query = 'Select * from users where email = "' + email + '" and password = "' + password + '"';
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+  });
+});
+
+app.post('/api/cookie', (req, res) => {
+  const { hash } = req.body;
+  const query = 'Select * from users where hash = "' + hash + '"';
   connection.query(query, function (error, results, fields) {
     if (error) throw error;
     res.send(results)
@@ -105,7 +115,8 @@ app.post('/api/register', (req, res) => {
     if (results.length > 0) {
       res.send({ message: 'Ya existe un usuario con ese email' })
     } else {
-      const query = 'INSERT INTO users (name, email, password) VALUES ("' + name + '", "' + email + '", "' + password + '")';
+      const hash = bcrypt.genSaltSync(17);
+      const query = 'INSERT INTO users (name, email, password, hash) VALUES ("' + name + '", "' + email + '", "' + password + '", "' + hash + '")';
       connection.query(query, function (error, results, fields) {
         if (error) throw error;
         res.send(results)
@@ -143,8 +154,8 @@ app.post('/api/addTasks', (req, res) => {
 
 app.post('/api/profile/', (req, res) => {
   const { user, array, actualPassword } = req.body;
-  console.log(array)
-  if (actualPassword != user.password) {
+  if (actualPassword != user.password || actualPassword == '') {
+    console.log({ actualPassword, user })
     res.send({ message: 'La contraseña actual no coincide' })
   }
   const patata = 'UPDATE users SET '
@@ -155,7 +166,6 @@ app.post('/api/profile/', (req, res) => {
       element.val = '"' + element.val + '"';
     }
     values += element.column + " = " + element.val;
-    console.log(values)
 
     if (index != array.length - 1) {
       values += ", ";
@@ -171,12 +181,12 @@ app.post('/api/profile/', (req, res) => {
 
 // Siempre dejar abajo, porque es cuando se ejecuta el servidor
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-});
-
-// const server = https.createServer(options, app);
-
-// server.listen(port, () => {
-//   console.log('Servidor HTTPS escuchando en el puerto ' + port);
+// app.listen(port, () => {
+//   console.log(`Example app listening at http://localhost:${port}`)
 // });
+
+const server = https.createServer(options, app);
+
+server.listen(port, () => {
+  console.log('Servidor HTTPS escuchando en el puerto ' + port);
+});

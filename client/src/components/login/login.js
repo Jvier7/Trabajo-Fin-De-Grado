@@ -7,6 +7,31 @@ function Login(props) {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    useEffect(() => {
+
+            const cookie = document.cookie.split(';').find(c=>c.trim().startsWith('hash='))
+            if (cookie) {
+                const hash = cookie.split('=')[1]
+                fetch(`${props.url}/api/cookie`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ hash })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            props.setIsLogged(true)
+                            props.setUser(data[0])
+                            navigate('/home')
+                        }
+                    })
+            }
+
+        
+    }, [])
+
     function handleSubmit(e) {
 
         e.preventDefault();
@@ -25,8 +50,10 @@ function Login(props) {
         .then(res => res.json())
         .then(data => {
             if(data.length > 0) {
+                document.cookie = `hash=${data[0].hash}`
                 props.setIsLogged(true)
                 props.setUser(data[0])
+                console.log(data[0])
                 navigate('/home')
             }
         }
@@ -61,10 +88,10 @@ function Login(props) {
                                                 } }/>
                                             </div>
                                             <div className="form-outline mb-4">
+                                                <label className="form-label" htmlFor="form2Example27">Contraseña</label>
                                                 <input type="password" id="form2Example27" className="form-control form-control-lg" onChange={ (e) => {
                                                     setPassword(e.target.value)
                                                 }}/>
-                                                <label className="form-label" htmlFor="form2Example27">Contraseña</label>
                                             </div>
                                             <div className="pt-1 mb-4">
                                                 <button className="btn btn-dark btn-lg btn-block" type="button" onClick={handleSubmit}>Entrar</button>

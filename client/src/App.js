@@ -9,10 +9,11 @@ import Header from './components/header/header';
 import Profile from './components/profile/profile';
 
 function App() {
-  const [url, setUrl] = useState("http://localhost:3090")
-  // const [url, setUrl] = useState("https://jointscounter.com:6090")
+  // const [url, setUrl] = useState("http://192.168.1.137:6090")
+  const [url, setUrl] = useState("https://jointscounter.com:6090")
   const [user, setUser] = useState(null)
   const [isLogged, setIsLogged] = useState(false)
+  const [tasks, setTasks] = useState([])
 
   const firebaseConfig = {
     apiKey: "AIzaSyBjpQ5kUI_PJ5BggLzn0ScoXpqTBzQ4cYo",
@@ -45,9 +46,9 @@ function App() {
     <>
       <BrowserRouter>
         <div className='main'>
-          <Header user = {user}></Header>
+          <Header user = {user} tasks = {tasks} setTasks = {setTasks}></Header>
           <Routes>
-            <Route path='home' element={<Home url={url} user={user}/>}></Route>
+            <Route path='home' element={<Home tasks = {tasks} setTasks = {setTasks} url={url} user={user}/>}></Route>
             <Route path='profile' element={<Profile url={url} user={user}/>}></Route>
             <Route path='*' element={<Navigate to='/home' />}></Route>
           </Routes>

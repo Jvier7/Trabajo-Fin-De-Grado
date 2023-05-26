@@ -34,6 +34,13 @@ function Profile(props) {
             alert('Por favor, rellene todos los campos')
             return
         }
+        if (newPassword !== '') {
+            if (newPassword < 8 || newPassword > 16) {
+                alert('La nueva contraseña debe tener entre 8 y 16 caracteres')
+                return
+            }
+            return
+        }
         array.forEach((element, index) => {
             if (element.val === '') {
                 array.splice(index, 1)
@@ -90,7 +97,7 @@ function Profile(props) {
                                                     }} />
                                                 </div>
                                                 <div className="form-outline mb-4">
-                                                    <label className="form-label" htmlFor="form2Example27">Contraseña Actual</label>
+                                                    <label className="form-label" htmlFor="form2Example27">Contraseña Actual <b style={{color: 'red'}}>*</b></label>
                                                     <input type="password" id="form2Example27" className="form-control form-control-lg" onChange={(e) => {
                                                         setActualPassword(e.target.value)
                                                     }} />
