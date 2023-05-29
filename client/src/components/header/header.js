@@ -64,37 +64,6 @@ function ResponsiveAppBar(props) {
 
   })
 
-  // function formatTime(val) {
-  //   if (val < 10) {
-  //     return '0' + val
-  //   } else {
-  //     return '';
-  //   }
-  // }
-
-  // useEffect(() => {
-
-  //   const timerID = setInterval(
-  //     () => tick(), 1000)
-
-  //   return function cleanup() {
-  //     clearInterval(timerID)
-  //   }
-
-  //   {
-
-  //   }
-  // })
-
-  // function tick() {
-  //   const d = new Date();
-  //   const h = d.getHours();
-  //   const m = d.getMinutes();
-  //   const s = d.getSeconds();
-
-  //   setTime(formatTime(h) + h + ':' + formatTime(m) + m + ':' + formatTime(s) + s)
-  // }
-
   React.useEffect(() => {
     setDone(props.tasks.filter(task => task.isCompleted === 1).length);
     setNotDone(props.tasks.filter(task => task.isCompleted === 0).length);
@@ -119,14 +88,10 @@ function ResponsiveAppBar(props) {
           navigate('/home')
         }}></img>
       </div>
-      {/* <div className="dateNow"> */}
-      {/* <h1 className="title">Fecha:</h1>
-        <h1>{fechaHoraActual}</h1> */}
-      {/* </div> */}
       <div className="clock">
             <h1>{time}</h1>
             <p>{date}</p>
-        </div>
+      </div>
       <div className="counter">
         <p className="title">Por realizar: {notDone}</p>
         <p className="title">Realizadas: {done}</p>
@@ -136,7 +101,7 @@ function ResponsiveAppBar(props) {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Ajustes">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar src='/assets/userProfile.png' />
             </IconButton>
           </Tooltip>
           <Menu

@@ -100,7 +100,7 @@ function Home(props) {
                         addTask()
                     }
                 }} />
-                <Button variant="contained" onClick={addTask}>+</Button>
+                <Button variant="contained" onClick={addTask}><img src="/assets/addButton.png"></img></Button>
             </div>
             {
                 error ? <Stack sx={{ width: '20%', position: 'fixed', left: 500, top: 20 }} spacing={2}>
