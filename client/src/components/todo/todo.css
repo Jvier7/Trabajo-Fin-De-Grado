@@ -9,8 +9,7 @@
     min-width: 50%;
     max-width: 50%;
     width: 50%;
-    background: linear-gradient(90deg, rgba(217,37,51,0.936186974789916) 20%, rgba(171,52,100,1) 79%, rgba(128,66,147,1) 90%);
-}
+    background: linear-gradient(to right, #C92D58, #994091, #B03676, #C92D58);}
 
 .containerStarDelete {
     display: flex;

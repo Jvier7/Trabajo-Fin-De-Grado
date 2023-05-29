@@ -53,7 +53,7 @@ function Todo(props) {
             }</p>
             <div className="containerStarDelete">
                 {
-                    props.task.priority ? <img src = "/assets/importantCompleted.png" onClick={makeUnimportant}></img> : <img src = "/assets/important.png" onClick={makeImportant}></img>
+                    props.task.priority ? <img src = "/assets/importantCompleted.png" onClick={makeUnimportant}></img> : <img className="starNotImportant" src = "/assets/important.png" onClick={makeImportant}></img>
                 }
                 <img src = "/assets/delete.png" onClick={deleteTask}></img>
             </div>
