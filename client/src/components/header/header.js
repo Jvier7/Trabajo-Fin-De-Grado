@@ -39,7 +39,9 @@ function ResponsiveAppBar(props) {
   return (
     <div className="god">
       <div>
-        <img src="/assets/logoEDIT.png" className="adbIcon"></img>
+        <img src="/assets/logoEDIT.png" className="adbIcon" onClick={() => {
+          navigate('/home')
+        }}></img>
       </div>
       <div className="dateNow">
         <h1 className="title">Fecha:</h1>
