@@ -36,7 +36,7 @@
     padding: 1rem;
 }
 
-.settingsUser h1 {
+.userName {
     color: #d691a5 !important;
     font-size: 1.7rem !important;
     text-shadow: 0.2rem 0.2rem 0.4rem #111;
@@ -53,12 +53,6 @@
     margin: 0;
     padding-right: 1rem;
     color: black;
-}
-
-@media (max-width: 767px) {
-    /* .hideMobile {
-        display: none;
-    } */
 }
 
 .clock {
@@ -82,4 +76,48 @@
     font-size: 1rem;
     text-align: center;
     text-shadow: 0.2rem 0.2rem 0.4rem #111;
+}
+
+@media only screen and (max-width: 600px) {
+    .clock {
+      width: 100px; 
+      height: 50px; 
+      border: none;
+      padding: 0px;
+    }
+
+    .h1Hour {
+      font-size: 0.8rem !important;
+      padding: 0px !important;
+      padding-top: 5%;
+    }
+
+    .clock p {
+      font-size: 0.6rem;
+      text-align: center;
+    }
+
+    .adbIcon {
+        width: 40px;
+        padding: 0;
+        margin-left: 5px;
+    }
+
+    .counter p {
+        font-size: 0.8rem;
+        border: 0px;
+    }
+
+    .userName {
+        font-size: 1.3rem !important;
+        padding-right: 0.7rem !important;
+    }
+
+    .settingsUser {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
 }

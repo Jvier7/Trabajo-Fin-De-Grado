@@ -89,7 +89,7 @@ function ResponsiveAppBar(props) {
         }}></img>
       </div>
       <div className="clock">
-            <h1>{time}</h1>
+            <h1 className="h1Hour">{time}</h1>
             <p>{date}</p>
       </div>
       <div className="counter">
