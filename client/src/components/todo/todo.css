@@ -51,3 +51,11 @@
     margin: 0;
     font-size: 1.3rem;
 }
+
+@media screen and (max-width: 600px) {
+    .todo {
+        min-width: 95%;
+        max-width: 95%;
+        width: 95%;
+    }
+}
